@@ -49,7 +49,6 @@ dependencyManagement {
 }
 
 contracts{
-	targetFramework = 'JUNIT'
 	testMode = 'EXPLICIT'
-	basePackageForTests = 'com.startwithjava.springwebfluxcontract.cdc'
+	baseClassForTests = 'com.startwithjava.springwebfluxcontract.cdc.PersonRestBase'
 }
