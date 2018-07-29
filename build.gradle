@@ -1,0 +1,55 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.3.RELEASE'
+		springCloudContractVersion = '2.0.0.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:${springCloudContractVersion}"
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin:'spring-cloud-contract'
+
+group = 'com.startwithjava'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+ext {
+	springCloudVersion = 'Finchley.RELEASE'
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.boot:spring-boot-starter-webflux')
+	compile('org.projectlombok:lombok:1.18.2')
+	runtime('org.springframework.boot:spring-boot-devtools')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('io.projectreactor:reactor-test')
+	testCompile('org.springframework.cloud:spring-cloud-starter-contract-verifier')
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-contract-spec', version: '2.0.0.RELEASE'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+contracts{
+	targetFramework = 'JUNIT'
+	testMode = 'EXPLICIT'
+	basePackageForTests = 'com.startwithjava.springwebfluxcontract.cdc'
+}
